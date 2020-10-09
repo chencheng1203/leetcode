@@ -129,7 +129,7 @@ vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int K) {
 }
 
 //零钱兑换
-const int INF_MAX = 999999;
+const unsigned int INF_MAX = 99999;
 int less_time(vector<int>& coins, vector<int>& amount_store, int curr_acount){
     int res = INF_MAX;
     for (int i = 0; i < coins.size(); i++){
@@ -416,12 +416,65 @@ bool canPartition(vector<int>& nums){
 }
 
 
+// 填充书架
+// 遍历每一本书，将该本书与前面的若干本书进行组合，如组合后书的宽度还是小于书架的宽度，说明组合有效
+// 有效组合后该层书架中书的高度为最高的那本书的高度
+// dp[i] = min(dp[i], dp[j-1]+h) // dp[j-1]表明前一本书所在书架的高度
+int minHeightShelves(vector<vector<int>>& books, int shelf_width) {
+    const unsigned int MAX_INF = 999999;
+    int books_size = books.size();
+    vector<int> dp(books_size+1, 0);
+    for (int i = 1; i <= books_size; i++){
+        int max_h = 0;
+        int curr_width = 0;
+        for (int j = i; i > 0; i--){
+            curr_width += books[j-1][0];
+            if (curr_width > shelf_width)
+                break;
+            max_h = std::max(books[j-1][1], max_h);
+            dp[i] = std::min(dp[i], dp[j-1]+max_h);
+        }
+    }
+    return dp[books_size];
+}
 
 
-/*int main(){
-    vector<int> v = {1, 5, 11, 5};
-    cout << canPartition(v);
-}*/
+// 回文子串的个数
+// dp[i][j] 子串s[i:j]是否为回文串，注j > i
+// dp[i][j] == true if i == j
+// dp[i][j] == true if s[i] == s[j] && j-i==1
+// dp[i][j] == true if dp[i+1][j-1] == true && s[i] == s[j]
+// [注] 遍历dp[i][j]时，需要保证dp[i+1][j-1]被计算过
+int countSubstrings(string s){
+    int strSize = s.length();
+    int res = 0;
+    vector<vector<bool>> dp(strSize, vector<bool>(strSize, false));
+    for (int i = strSize - 1; i >= 0; i--){
+        for (int j = i; j < strSize; j++){
+            if (i == j){
+                dp[i][j] = true;
+            }else{
+                if (j - i == 1 && s[i] == s[j]){
+                    dp[i][j] = true;
+                }else{
+                    if (s[i] == s[j] && dp[i+1][j-1] == true){
+                        dp[i][j] = true;
+                    }
+                }
+            }
+            if (dp[i][j]){
+                res++;
+            }
+        }
+    }
+    return res;
+}
+
+
+int main(){
+    string s = "aaa";
+    cout << countSubstrings(s);
+}
 
 
 
