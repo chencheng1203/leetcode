@@ -5,6 +5,7 @@
 #include <map>
 #include <stack>
 #include <algorithm>
+#include <math.h>
 
 using std::cout;
 using std::cin;
@@ -471,9 +472,195 @@ int countSubstrings(string s){
 }
 
 
+// 环绕字符串中唯一的子字符串
+
+int findSubstringInWraproundString(string& p) {
+    int strSize = p.length();
+    if (strSize < 2) return strSize;
+    vector<vector<bool>> dp(strSize, vector<bool>(strSize, false));
+    std::map<string, bool> hash;
+    int res_count = 0;
+    for (int i = 0; i < strSize; i++){
+        for (int j = i; j < strSize; j++){
+            if (i == j){
+                dp[i][j] = true;
+                if (hash[p.substr(i, 1)]){
+                    continue;
+                }else{
+                    hash[p.substr(i, 1)] = true;
+                    res_count++;
+                    continue;
+                }
+            }
+            if (p[j]=='a' && p[j-1]=='z'){
+                dp[i][j] = true;
+                if (hash[p.substr(i, j-i+1)]){
+                    continue;
+                }else{
+                    hash[p.substr(i, j-i+1)] = true;
+                    res_count++;
+                    continue;
+                }
+            }
+            if (p[j]-p[j-1] == 1 && dp[i][j-1]==true){
+                dp[i][j] = true;
+                if (hash[p.substr(i, j-i+1)]){
+                    continue;
+                }else{
+                    hash[p.substr(i, j-i+1)] = true;
+                    res_count++;
+                    continue;
+                }
+            }
+        }
+    }
+    return res_count;
+}
+
+// 从头到尾扫描
+// dp[i]存储了以当前字符结尾的子串它的最长连续子串长度
+// dp[i]更新，若当前字符与前一个字符不连续时，则以当前字符结尾的子串其最长连续子串为max(dp[p[i]], 1)
+// 结果是dp中所有值相加
+int findSubstringInWraproundString_dp(string& p) {
+    int strSize = p.length();
+    if (strSize < 2) return strSize;
+    vector<int> dp(int('z')-int('a')+1, 0);
+    int curr_sum = 1;
+    dp[int(p[0]) - int('a')] = curr_sum;
+    for (int i = 1; i < strSize; i++){
+        if (p[i] - p[i-1] == 1 || p[i] - p[i-1] == -25){
+            curr_sum++;
+            dp[int(p[i]) - int('a')] = std::max(dp[int(p[i]) - int('a')], curr_sum);
+        }else{
+            dp[int(p[i]) - int('a')] = std::max(dp[int(p[i]) - int('a')], 1);;
+            curr_sum = 1;
+        }
+    }
+    int res = 0;
+    for (int num : dp){
+        res += num;
+    }
+    return res;
+}
+
+
+// 最长回文子串
+string longestPalindrome(string s) {
+    int s_len = s.length();
+    if (s_len < 2) return s;
+    vector<vector<bool>> dp(s_len, vector<bool>(s_len, 0));
+    int beg = 0;
+    int max_len = 0;
+    for (int i = s_len - 1; i >= 0; i--){
+        for (int j = i; j < s_len; j++){
+            if (i == j){
+                dp[i][j] = true;
+                int curr_len = j-i+1;
+                if (curr_len > max_len) {
+                    beg = i;
+                    max_len = curr_len;
+                }
+                continue;
+            }
+            if (j - i == 1 && s[j] == s[i]){
+                dp[i][j] = true;
+                int curr_len = j-i+1;
+                if (curr_len > max_len) {
+                    beg = i;
+                    max_len = curr_len;
+                }
+                continue;
+            }
+            if (dp[i+1][j-1] && s[i] == s[j]){
+                dp[i][j] = true;
+                int curr_len = j-i+1;
+                if (curr_len > max_len) {
+                    beg = i;
+                    max_len = curr_len;
+                }
+                continue;
+            }
+        }
+    }
+    return s.substr(beg, max_len);
+}
+
+
+// 完全平方数
+// 定义状态dp[i]，表示到数字i为止，需要的最少平方数
+// 状态转移 dp[i] = min(dp[i], dp[i-j*j]+1) +1表示j*j是一个完全平方数
+int numSquares(int n){
+    vector<int> dp(n+1, 0);
+    for (int i = 1; i <= n; i++){
+        dp[i] = i;
+        for (int j = 1; i - j * j >= 0; j++){
+            dp[i] = std::min(dp[i], dp[i-j*j]+1);
+        }
+    }
+    return dp[n];
+}
+
+
+// 整数拆分
+// 将整数拆分成3相加时，其拆分数组和最大
+// 最优：拆分成3
+// 次优：拆分成2
+// 最差：拆分成1
+// n = 3 * a + b
+// 当 b == 0 时，返回 3^a
+// 当 b == 2 时，不拆 返回 3^a * 2
+// 当 b == 1时，返回 3^(a-1) * 4
+int integerBreak(int n){
+    if (n == 2) return 1;
+    if (n == 3) return 2;
+    int a = 0, b = 0;
+    a = n / 3;
+    b = n % 3;
+    if (b == 0) return std::pow(3, a);
+    if (b == 1) return std::pow(3, a-1)*4;
+    if (b == 2) return std::pow(3, a)*2;
+    return -1;
+}
+
+
+// 最长重复子数组
+int findLength(vector<int>& A, vector<int>& B){
+    int size_A = A.size(), size_B = B.size();
+    vector<vector<int>> dp(size_A, vector<int>(size_B, 0));
+    for (int i = 0; i < size_A; i++){
+        if (A[i] == B[0])
+            dp[i][0] = 1;
+    }
+    for (int j = 0; j < size_B; j++){
+        if (B[j] == A[0])
+            dp[0][j] = 1;
+    }
+    int res = 0;
+    for (int i = 1; i < size_A; i++){
+        for (int j = 1; j < size_B; j++){
+            if (A[i] == B[j]){
+                dp[i][j] = dp[i-1][j-1] + 1;
+            }else{
+                dp[i][j] = 0;
+            }
+            res = std::max(res, dp[i][j]);
+        }
+    }
+    // print dp table
+    for (int i = 0; i < size_A; i++){
+        for (int j = 0; j < size_B; j++){
+            cout << dp[j][i] << ' ';
+        }
+        cout << endl;
+    }
+
+    return res;
+}
+
 int main(){
-    string s = "aaa";
-    cout << countSubstrings(s);
+    vector<int> A = {0,1,1,1,1};
+    vector<int> B = {1,0,1,0,1};
+    cout << findLength(A, B);
 }
 
 
