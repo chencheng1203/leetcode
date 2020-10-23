@@ -5,6 +5,7 @@
 #include <map>
 #include <stack>
 #include <algorithm>
+#include <memory.h>
 
 using std::cout;
 using std::cin;
@@ -68,9 +69,133 @@ int lastStoneWeight(vector<int>& stones) {
     return stones[0];
 }
 
-/*int main(){
-    vector<int> nums = {10,4,2,10};
-    int res = lastStoneWeight(nums);
-    cout << res;
+// 查找常用字符串
+int charIsInStr(char ch, string s, vector<bool>& used){
+    for (int i = 0; i < s.length(); i++)
+        if (s[i] == ch && !used[i]){
+            used[i] = true;
+            return i;
+        }
+    return -1;
+}
+vector<string> commonChars(vector<string>& A) {
+    string first_str = A.front();
+    A.erase(A.begin());
+    vector<string> res;
+    while(A.size()){
+        string second_str = A.front();
+        A.erase(A.begin());
+        vector<bool> used(second_str.length(), 0);
+        for (int i = 0; i < first_str.length(); i++){
+            int flag = charIsInStr(first_str[i], second_str, used);
+            if (flag != -1){
+                string tmp_s = "";
+                tmp_s += first_str[i];
+                res.push_back(tmp_s);
+            }
+        }
+        if (!A.size()) return res;
+        // 构建first_str
+        string A_temp = "";
+        for (int i = 0; i < res.size(); i++){
+            A_temp += res[i];
+        }
+        first_str = A_temp;
+        vector<string>().swap(res); // 清空res
+    }
+    return res;
+}
+
+
+// 三个数的最大乘积
+int maximumProduct(vector<int>& nums){
+    int size = nums.size();
+    std::sort(nums.begin(), nums.end());
+    int p = 0;
+    if (nums[p] >= 0){
+        return nums[size - 1] * nums[size - 2] * nums[size - 3];
+    }else{
+        long s1 = nums[size - 1] * nums[size - 2] * nums[size - 3];
+        long s2 = nums[0] * nums[1] * nums[size - 1];
+        return std::max(s1, s2);
+    }
+}
+
+// 比较含退格的字符串
+string match(string s){
+    string res = "";
+    for (char ch : s){
+        if (ch != '#'){
+            res.push_back(ch);
+        }else{
+            if (res.length()){
+                res.pop_back();
+            }
+        }
+    }
+    return res;
+}
+bool backspaceCompare(string S, string T){
+    return match(S) == match(T);
+}
+
+// 长键按入-双指针
+bool isLongPressedName(string name, string typed) {
+    int name_size = name.length();
+    int typed_size = typed.length();
+    int p1 = 0, p2 = 0;
+    char pre_ch = name[p1];
+    while(p1 != name_size && p2 != typed_size){
+        if(name[p1] == typed[p2]){
+            pre_ch = name[p1];
+            p1++;
+            p2++;
+            continue;
+        }
+        if (typed[p2] == pre_ch){
+            p2++;
+            continue;
+        }
+        if (typed[p2] != pre_ch && typed[p2] != name[p1]){
+            return false;
+        }
+    }
+    if (p1 == name_size && p2 == typed_size)
+        return true;
+    if (p1 == name_size){
+        for (int i = p2; i < typed_size; i++){
+            if (typed[i] != pre_ch)
+                return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+
+// 划分字母区间
+vector<int> partitionLabels(string S) {
+    vector<int> res;
+    int last_pos[26];
+    memset(last_pos, -1, sizeof(last_pos));
+    for (int i = 0; i < S.size(); i++){
+        last_pos[S[i] - 'a'] = i;  // 当前字符最后出现的位置
+    }
+    int start = 0, end = 0;
+    for (int i = 0; i < S.size(); i++){
+        end = std::max(end, last_pos[S[i]-'a']);  // 贪心，每次都找最大的位置
+        if (i == end){
+            res.push_back(i - start + 1);
+            start = i + 1;
+        }
+    }
+    return res;
+}
+
+
+/*int main() {
+    string S = "ababcbacadefegdehijhklij";
+    vector<int> res = partitionLabels(S);
+    cout << ' ' << endl;
 }*/
 

@@ -6,6 +6,7 @@
 #include <stack>
 #include <algorithm>
 #include <math.h>
+#include <memory.h>
 
 using std::cout;
 using std::cin;
@@ -15,21 +16,23 @@ using std::string;
 using std::vector;
 
 // 最大子序和
+// dp[i] 为到nums[i] 为止，最大子序和
+// 状态转移：dp[i] = dp[i-1] + nums[i] if dp[i-1] > 0；说明前面的连续和是正的，else dp[i] = nums[i]
 int maxSubArray(vector<int>& nums) {
     if (nums.size() == 0) return -1;
-    int res = nums[0];
-    int max_num = 0;
-    for (int i = 0; i < nums.size(); i++){
-        if (max_num < 0){
-            max_num = nums[i];
+    vector<int> dp(nums.size(), 0);
+    dp[0] = nums[0];
+    int res = 0;
+    for (int i = 1; i < nums.size(); i++){
+        if (dp[i - 1] < 0){
+            dp[i] = nums[i];
         }else{
-            max_num += nums[i];
+            dp[i] = dp[i-1] + nums[i];
         }
-        res = std::max(max_num, res);
+        res = std::max(res, dp[i]);
     }
     return res;
 }
-
 
 // 股票的最大利润
 int maxProfit(vector<int>& prices) {
@@ -47,7 +50,6 @@ int maxProfit(vector<int>& prices) {
     return max_profit;
 }
 
-
 // 0-1 背包问题
 // 1. 状态定义：dp[i][j] 将前i件物品放入容量为j的背包所能获得的最大价值
 // 2. 若当前背包容量W不足以放下重量为w的物品，则背包内物品的价值等于前i-1物品的价值，即 dp[i][j] = dp[i-1][j] // weight[i] > j
@@ -64,15 +66,8 @@ int zero_one_package(vector<int>& weights, vector<int>& values, int W){
             }
         }
     }
-    for (int i = 0; i < things_k+1; i++){
-        for (int j = 0; j < W+1; j++){
-            cout << dp[i][j] << ' ';
-        }
-        cout << endl;
-    }
     return dp[things_k][W];
 }
-
 
 // 矩阵前缀和
 vector<vector<int>> matrix_prefix_sum(vector<vector<int>>& matrix){
@@ -108,7 +103,6 @@ int maxSideLength(vector<vector<int>>& mat, int threshold) {
     }
     return ans;
 }
-
 
 // 矩阵区域和
 vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int K) {
@@ -155,7 +149,6 @@ int coinChange(vector<int>& coins, int amount) {
     }
     return amount_store[amount];
 }
-
 
 // 最长上升子序列
 // 1. dp[i] 定义为以nums[i]结尾的最长上升子序列
@@ -256,7 +249,6 @@ int maxTurbulenceSize(vector<int>& A) {
     return results;
 }
 
-
 // 新21点-爱丽丝抽牌游戏
 // 牌的范围[1, W]，得分少于K时，继续取牌，当停止取牌时，手上牌的总和小于等于N的概率
 // 定义dp[i]，当前牌面为i时，爱丽丝获胜的概率，又已知，牌面最小值为0，最大值为 K-1+W
@@ -349,7 +341,6 @@ int rob2(vector<int>& nums) {
     return std::max(a1, a2);
 }
 
-
 // 目标和-动态规划
 // 题目要求得到的结果是方法的个数，根据dp问题的经验，题目要求什么，就将dp的含义定义成什么
 // 根据0-1背包问题的经验，dp[i][j] 表示前i个数组中的数字其目标和为j的方法数
@@ -380,7 +371,6 @@ int findTargetSumWays(vector<int>& nums, int S){
     }
     return dp[numSize-1][sum+S];
 }
-
 
 // 分割等和子集
 // 思考：将一个数组分割成两部分，使得两部分的和相等，如果可以的话，那么和一定是数组中所有元素和/2，如果是奇数，返回False
@@ -416,7 +406,6 @@ bool canPartition(vector<int>& nums){
     return dp[numSize-1][target];
 }
 
-
 // 填充书架
 // 遍历每一本书，将该本书与前面的若干本书进行组合，如组合后书的宽度还是小于书架的宽度，说明组合有效
 // 有效组合后该层书架中书的高度为最高的那本书的高度
@@ -438,7 +427,6 @@ int minHeightShelves(vector<vector<int>>& books, int shelf_width) {
     }
     return dp[books_size];
 }
-
 
 // 回文子串的个数
 // dp[i][j] 子串s[i:j]是否为回文串，注j > i
@@ -471,9 +459,7 @@ int countSubstrings(string s){
     return res;
 }
 
-
 // 环绕字符串中唯一的子字符串
-
 int findSubstringInWraproundString(string& p) {
     int strSize = p.length();
     if (strSize < 2) return strSize;
@@ -543,7 +529,6 @@ int findSubstringInWraproundString_dp(string& p) {
     return res;
 }
 
-
 // 最长回文子串
 string longestPalindrome(string s) {
     int s_len = s.length();
@@ -585,7 +570,6 @@ string longestPalindrome(string s) {
     return s.substr(beg, max_len);
 }
 
-
 // 完全平方数
 // 定义状态dp[i]，表示到数字i为止，需要的最少平方数
 // 状态转移 dp[i] = min(dp[i], dp[i-j*j]+1) +1表示j*j是一个完全平方数
@@ -599,7 +583,6 @@ int numSquares(int n){
     }
     return dp[n];
 }
-
 
 // 整数拆分
 // 将整数拆分成3相加时，其拆分数组和最大
@@ -622,23 +605,17 @@ int integerBreak(int n){
     return -1;
 }
 
-
 // 最长重复子数组
+// 状态定义 dp[i][j]，以A[i]和B[j]结尾的子串的最长公共子串的长度
+// dp[i][j] = dp[i-1][j-1] + 1 if A[i] = B[j]
+// dp[i][j] = 0 if A[i] != B[j]
 int findLength(vector<int>& A, vector<int>& B){
     int size_A = A.size(), size_B = B.size();
-    vector<vector<int>> dp(size_A, vector<int>(size_B, 0));
-    for (int i = 0; i < size_A; i++){
-        if (A[i] == B[0])
-            dp[i][0] = 1;
-    }
-    for (int j = 0; j < size_B; j++){
-        if (B[j] == A[0])
-            dp[0][j] = 1;
-    }
+    vector<vector<int>> dp(size_A+1, vector<int>(size_B+1, 0));
     int res = 0;
     for (int i = 1; i < size_A; i++){
         for (int j = 1; j < size_B; j++){
-            if (A[i] == B[j]){
+            if (A[i-1] == B[j-1]){
                 dp[i][j] = dp[i-1][j-1] + 1;
             }else{
                 dp[i][j] = 0;
@@ -646,22 +623,168 @@ int findLength(vector<int>& A, vector<int>& B){
             res = std::max(res, dp[i][j]);
         }
     }
-    // print dp table
-    for (int i = 0; i < size_A; i++){
-        for (int j = 0; j < size_B; j++){
-            cout << dp[j][i] << ' ';
-        }
-        cout << endl;
-    }
-
     return res;
 }
 
-int main(){
-    vector<int> A = {0,1,1,1,1};
-    vector<int> B = {1,0,1,0,1};
-    cout << findLength(A, B);
+// 最长回文子序列的长度
+// 定义状态 dp[i][j]：字符串s[i:j]中最长回文子序列
+// 状态转移：若s[i]==s[j]，即首尾字符相等，dp[i][j] = dp[i+1][j-1] + 2，否则 dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+// 注意遍历的顺序，应该从最后一个字符开始遍历，保证在计算dp[i][j]时，子问题已经得到了解决
+int longestPalindromeSubseq(string s){
+    int s_size = s.length();
+    if (s_size < 2) return s_size;
+    vector<vector<int>> dp(s_size, vector<int>(s_size, 0));
+    for (int i = s_size - 1; i > -1; i--){
+        dp[i][i] = 1;
+        for (int j = i+1; j < s_size; j++){
+            int left = i + 1;
+            int right = j - 1;
+            if (s[i] == s[j]){
+                dp[i][j] = dp[left][right] + 2;
+            }else{
+                dp[i][j] = std::max(dp[left][j], dp[i][right]);
+            }
+        }
+    }
+    return dp[0][s_size-1];
 }
+
+// 1048 最长字符串链
+
+
+// 下降路径最小和
+// 定义dp[i][j] 以当前nums[i][j]
+int triplt_min(int a, int b, int c){
+    int tmp_min = std::min(a, b);
+    return std::min(tmp_min, c);
+}
+int minFallingPathSum(vector<vector<int>>& A) {
+    const int MAX_INF = 9999;
+    int rows = A.size();
+    int cols = A[0].size();
+    vector<vector<int>> dp(rows, vector<int>(cols, 0));
+    int res = MAX_INF;
+
+    // 初始化
+    for (int j = 0; j < cols; j++){
+        dp[rows - 1][j] = A[rows - 1][j];
+    }
+    // 状态转移
+    for (int i = rows - 2; i >= 0; i--){
+        for (int j = 0; j < cols; j++){
+            int left = std::max(0, j-1);
+            int right = std::min(j+1, cols-1);
+            dp[i][j] = A[i][j] + triplt_min(dp[i+1][left], dp[i+1][j], dp[i+1][right]);
+        }
+    }
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            cout << dp[i][j] << ' ';
+        }
+        cout << endl;
+    }
+    for (int i = 0; i < cols; i++){
+        res = std::min(res, dp[0][i]);
+    }
+    return res;
+}
+
+// 猜数字
+// 猜错了需要支付本次所猜的数字，问至少需要有多少现金才能保证赢下游戏
+int getMoneyAmount(int n){
+
+}
+
+// 视频拼接
+int videoStitching(vector<vector<int>>& clips, int T){
+    const int MAX_INF = 9999;
+    vector<int> dp(T+1, MAX_INF);
+    dp[0] = 0;
+    for (int k = 1; k <= T; k++){
+        for (int i = 0; i < clips.size(); i++){
+            if (clips[i][0] <= k && clips[i][1] >= k)
+                dp[k] = std::min(dp[k], dp[clips[i][0]] + 1);
+        }
+    }
+    if (dp[T] >= MAX_INF) return -1;
+    return dp[T];
+}
+
+// 零钱兑换的方法数
+// dp[i] 当兑换的金额为i时的方法数
+// 初始化 dp[0] = 0
+// dp[i] += dp[i - coins[j]] for j in len(coins)
+int change(int amount, vector<int>& coins){
+    int dp[amount + 1];
+    memset(dp, 0, sizeof(dp));
+    dp[0] = 1;
+    for (int i = 1; i <= amount; i++){
+        for (int coin: coins){
+            if (i < coin) continue;
+            dp[i] += dp[i-coin];
+        }
+    }
+    return dp[amount];
+}
+
+// 乘积最大子数组
+// 由于存在负数的情况，最优子结构不能由一个dp维护，定义两个dp，分别是dp_min[i]和dp_max[i]表示到当前nums[i]为止最大的乘积和最小的乘积
+// dp[i] -> 到nums[i]为止，最大的乘积
+// dp_max[i] = max(dp_max[i-1]*nums[i], dp_min[i-1]*nums[i], nums[i])
+// dp_min[i] = min(dp_max[i-1]*nums[i], dp_min[i-1]*nums[i], nums[i])
+int tripleMin(int a1, int a2, int a3){
+    return std::min(std::min(a1, a2), a3);
+}
+int tripleMax(int a1, int a2, int a3){
+    return std::max(std::max(a1, a2), a3);
+}
+
+int maxProduct(vector<int>& nums) {
+    int size = nums.size();
+    int dp_min[size], dp_max[size];
+    memset(dp_min, 0, sizeof(dp_min));
+    memset(dp_max, 0, sizeof(dp_max));
+    dp_min[0] = nums[0];
+    dp_max[0] = nums[0];
+    int res = nums[0];
+    for (int i = 1; i < size; i++){
+        dp_max[i] = tripleMax(dp_max[i-1]*nums[i], dp_min[i - 1]*nums[i], nums[i]);
+        dp_min[i] = tripleMin(dp_max[i-1]*nums[i], dp_min[i - 1]*nums[i], nums[i]);
+        res = std::max(res, dp_max[i]);
+    }
+    return res;
+}
+
+// 统计全为 1 的正方形子矩阵
+// dp[i][j]表示mat[i][j]位置左上的全1正方形矩阵的个数
+// dp[i][j] = std::min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1
+int countSquares(vector<vector<int>>& matrix){
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+    vector<vector<int>> dp(rows, vector<int>(cols, 0));
+    int res = 0;
+    // 初始化
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            if (i == 0 || j == 0){
+                dp[i][j] = matrix[i][j];
+            }else{
+                if (matrix[i][j] == 0){
+                    dp[i][j] = 0;
+                }else{
+                    dp[i][j] = tripleMin(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]) + 1;
+                }
+            }
+            res += dp[i][j];
+        }
+    }
+    return res;
+}
+
+/*int main(){
+    vector<vector<int>> matrix ={{1,1,0},{1,1,1},{0,1,1}};
+    cout << countSquares(matrix);
+}*/
 
 
 
