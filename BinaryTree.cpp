@@ -248,16 +248,56 @@ void insertIntoBST(TreeNode* root, int val){
     }
 }
 
+
+// 填充每个节点的下一个右侧节点
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+            : val(_val), left(_left), right(_right), next(_next) {}
+};
+
+Node* connect(Node* root) {
+    if (!root) return root;
+    vector<Node*> node_queue;
+    node_queue.push_back(root);
+    while(node_queue.size()){
+        int curr_size = node_queue.size();
+        for (int i = 0; i < curr_size; i++){
+            Node* curr_node = node_queue.front();
+            node_queue.erase(node_queue.begin());
+            if (curr_node->left){
+                node_queue.push_back(curr_node->left);
+            }
+            if (curr_node->right){
+                node_queue.push_back(curr_node->right);
+            }
+            if (i == curr_size - 1){
+                curr_node->next = NULL;
+            }else{
+                curr_node->next = node_queue[0];
+            }
+        }
+    }
+    return root;
+}
+
+
 /*int main(){
-	std::vector<int> v = {3,9,20,-1,-1,15,7};
-	TreeNode* root = createBTree(v);
-	std::vector<std::vector<int>> res = returnLevelOrder(root);
-	for (int i = 0; i < res.size(); i++){
-		for (int j = 0; j < res[i].size(); j++){
-			cout << res[i][j] << ' ';
-		}
-		cout << endl;
-	}
+    std::vector<int> v = {3,9,20,-1,-1,15,7};
+    TreeNode* root = createBTree(v);
+    std::vector<std::vector<int>> res = returnLevelOrder(root);
+    for (int i = 0; i < res.size(); i++){
+        for (int j = 0; j < res[i].size(); j++){
+            cout << res[i][j] << ' ';
+        }
+        cout << endl;
+    }
 }*/
 
 

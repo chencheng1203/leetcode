@@ -692,10 +692,14 @@ int minFallingPathSum(vector<vector<int>>& A) {
 // 猜数字
 // 猜错了需要支付本次所猜的数字，问至少需要有多少现金才能保证赢下游戏
 int getMoneyAmount(int n){
-
+    return 0;
 }
 
 // 视频拼接
+// dp思想 -> dp[i]表示当需要拼接成[0, T]的视频时，需要的最短的视频的数量
+// 当一个视频段j，其尾节点clip[j][1] >= i 且 clip[j][0] <= i，说明当前段包含了需要拼接的尾节点，则只需要头节点的最小拼接数 + 1即可
+// 状态转移 dp[i] = min(dp[i], dp[clips[j][0]] + 1)
+// 初始化 dp[0] = 0
 int videoStitching(vector<vector<int>>& clips, int T){
     const int MAX_INF = 9999;
     vector<int> dp(T+1, MAX_INF);
@@ -781,10 +785,118 @@ int countSquares(vector<vector<int>>& matrix){
     return res;
 }
 
-/*int main(){
-    vector<vector<int>> matrix ={{1,1,0},{1,1,1},{0,1,1}};
-    cout << countSquares(matrix);
-}*/
+// 只有两个键的键盘
+int minSteps(int n) {
+    vector<int> dp(n+1, 0);
+    if (n < 2) return 0;
+    dp[0] = 0;
+    dp[1] = 0;
+    if (n == 2) return 2;
+    dp[2] = 2;
+    for (int i = 3; i <= n; i++){
+        for (int j = 1; j <= i; j++){
+            if (i % j == 0 && (j != 1 && j != i)){
+                int time = i / j;
+                dp[i] = dp[time] + j;
+                break;
+            }else{
+                dp[i]++;
+            }
+        }
+    }
+    return dp[n];
+}
+
+// 数组中的最长山脉
+// left[i] -> 以A[i]为基准，可以其左边的值小于当前值的个数
+// right[i] -> 以A[i]为基准，其右边的值小于当前值的个数
+// 只有当left[i]和right[i]都大于0时，A[i]才能作为山顶，且res = left[i] + right[i] + 1
+int longestMountain(vector<int>& A) {
+    int size = A.size();
+    if (size < 3) return 0;
+    vector<int> left(size, 0);
+    vector<int> right(size, 0);
+    // cal left
+    for (int i = 1; i < size; i++) {
+        if (A[i] > A[i - 1]) {
+            left[i] = left[i - 1] + 1;
+        }
+    }
+    // cal right
+    for (int i = size - 2; i >= 0; i--){
+        if (A[i] > A[i+1]){
+            right[i] = right[i+1] + 1;
+        }
+    }
+    // emun all
+    int res = 0;
+    for (int i = 0; i < size; i++){
+        if (left[i] > 0 && right[i] > 0){
+            res = std::max(res, left[i] + right[i] + 1);
+        }
+    }
+    return res;
+}
+
+// “1和0”-动态规划-背包问题
+vector<int> numsOfzero_one(string S){
+    vector<int> res(2, 0);
+    for (int i = 0; i < S.size(); i++){
+        if (S[i] == '0'){
+            res[0]++;
+        }
+        if (S[i] == '1'){
+            res[1]++;
+        }
+    }
+    return res;
+}
+int findMaxForm(vector<string>& strs, int m, int n) {
+    vector<vector<vector<int>>> dp(strs.size() + 1, vector<vector<int>>(m+1, vector<int>(n+1, 0)));
+    for (int k = 1; k <= strs.size(); k++){
+        int zero_nums = numsOfzero_one(strs[k-1])[0];
+        int one_nums = numsOfzero_one(strs[k-1])[1];
+        for (int i = 0; i <= m; i++){
+            for (int j = 0; j <= n; j++){
+                if (i >= zero_nums && j >= one_nums){
+                    dp[k][i][j] = std::max(dp[k-1][i][j], dp[k-1][i-zero_nums][j-one_nums]+1);
+                }else{
+                    dp[k][i][j] = dp[k-1][i][j];
+                }
+            }
+        }
+    }
+    return dp[strs.size()][m][n];
+}
+
+// 三角形最短路径和
+// dp[i][j] 表示到第i行第j列的最短路径和
+// 状态转移 dp[i][j] = min(dp[i-1][j], dp[i-1][j-1]) + triangle[i][j]
+// 边界条件 dp[i][0] = dp[i-1][0]; dp[i][i] = dp[i-1][i-1] + triangle[i][i];初始条件dp[0][0] = 0
+int minimumTotal_per(vector<vector<int>>& triangle){
+    int triangle_size = triangle.size();
+    vector<vector<int>> dp(triangle_size, vector<int>(triangle_size, 0));
+    // 状态初始化
+    dp[0][0] = triangle[0][0];
+    for (int i = 1; i < triangle_size; i++){
+        dp[i][0] = dp[i-1][0] + triangle[i][0];
+        for (int j = 1; j < i; j++){
+            dp[i][j] = std::min(dp[i-1][j], dp[i-1][j-1]) + triangle[i][j];
+        }
+        dp[i][i] = dp[i-1][i-1] + triangle[i][i];
+    }
+    int res = dp[triangle_size-1][0];
+    for (int i = 1; i < triangle_size; i++){
+        res = std::min(res, dp[triangle_size-1][i]);
+    }
+    return res;
+}
+
+
+int main(){
+    vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
+    cout << minimumTotal_per(triangle);
+}
 
 
 

@@ -18,6 +18,7 @@ struct ListNode
 {
     int val;
     ListNode* next;
+    ListNode():val(-1), next(NULL){}
     ListNode(int value):val(value), next(NULL){}
 };
 
@@ -38,7 +39,6 @@ ListNode* createListNode(std::vector<int> nums){
     }
     return root;
 }
-
 
 // 反转链表
 ListNode* reverseList(ListNode* head){
@@ -245,6 +245,35 @@ ListNode* oddEvenList(ListNode* head){
     curr_odd->next = even_head;
     return odd_head;
 }
+
+
+// 两两交换链表中的节点
+ListNode* swapPairs(ListNode* head) {
+    if (!head || !head->next) return head;
+    ListNode* curr_p = head;
+    ListNode* p_next = curr_p->next;
+    ListNode* p_next_next = p_next->next;
+    ListNode* pre_p;
+
+    // exchange first 2 node
+    curr_p->next = p_next_next;
+    p_next->next = curr_p;
+    ListNode* res_p = p_next;
+    pre_p = curr_p;
+    curr_p = p_next_next;
+
+    while(curr_p && curr_p->next){
+        p_next = curr_p->next;
+        p_next_next = p_next->next;
+        curr_p->next = p_next_next;
+        p_next->next = curr_p;
+        pre_p->next = p_next;
+        pre_p = curr_p;
+        curr_p = p_next_next;
+    }
+    return res_p;
+}
+
 
 
 /*int main(){

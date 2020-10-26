@@ -85,9 +85,32 @@ bool exist(vector<vector<char>>& board, string word){
     return false;
 }
 
+// 三角形最小路径和
+void minimumTotalCore(vector<vector<int>>& triangle, int dep, int curr_dep, int curr_idx, int sum, int& res){
+    if (curr_dep == dep){
+        res = std::min(sum, res);
+        return;
+    }
+    for (int i = curr_idx; i < curr_idx+2; i++){
+        if (curr_idx == 0 && i == 1 && curr_dep == 0) return;
+        int curr_node = triangle[curr_dep][i];
+        sum += curr_node;
+        minimumTotalCore(triangle, dep, curr_dep+1, i, sum, res);
+        sum -= curr_node;
+    }
+}
+int minimumTotal(vector<vector<int>>& triangle) {
+    if (triangle.size() == 0) return 0;
+    if (triangle.size() == 1) return triangle[0][0];
+    const int MAX_INF = 999999;
+    int res = MAX_INF;
+    minimumTotalCore(triangle, triangle.size(), 0, 0, 0, res);
+    return res;
+}
 
-int main(){
+
+/*int main(){
     vector<vector<char>> board = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
     string S = "ABCCED";
     cout << exist(board, S);
-}
+}*/

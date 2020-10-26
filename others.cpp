@@ -6,6 +6,7 @@
 #include <stack>
 #include <algorithm>
 #include <memory.h>
+#include <sstream>
 
 using std::cout;
 using std::cin;
@@ -192,10 +193,43 @@ vector<int> partitionLabels(string S) {
     return res;
 }
 
+// 数组游戏赢家
+int getWinner(vector<int>& arr, int k) {
+    int arr_size = arr.size();
+    int min_num = std::min(arr[0], arr[1]);
+    arr.push_back(min_num);
+    if (min_num == arr[0]){
+        arr.erase(arr.begin());
+    }else{
+        swap(&arr[0], &arr[1]);
+        arr.erase(arr.begin());
+    }
+    int pre_win_num = arr[0];
+    int continus_win = 1;
+    int curr_win_num = pre_win_num;
+    while(continus_win != k){
+        int min_num = std::min(arr[0], arr[1]);
+        curr_win_num = std::max(arr[0], arr[1]);
+        arr.push_back(min_num);
+        if (min_num == arr[0]){
+            arr.erase(arr.begin());
+        }else{
+            swap(&arr[0], &arr[1]);
+            arr.erase(arr.begin());
+        }
+        if (curr_win_num == pre_win_num){
+            continus_win++;
+        }else{
+            pre_win_num = curr_win_num;
+            continus_win = 1;
+        }
+    }
+    return curr_win_num;
+}
+
 
 /*int main() {
-    string S = "ababcbacadefegdehijhklij";
-    vector<int> res = partitionLabels(S);
-    cout << ' ' << endl;
+    vector<vector<int>> triangle = {{-1}, {-2, -3}};
+    cout << minimumTotal(triangle);
 }*/
 
