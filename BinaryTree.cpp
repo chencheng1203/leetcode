@@ -6,7 +6,6 @@
 #include <stack>
 #include <algorithm>
 
-using std::cout;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -21,7 +20,6 @@ struct TreeNode
     TreeNode* right;
     TreeNode(int x): val(x), left(NULL), right(NULL){}
 };
-
 
 // 按照层次创建二叉树-队列的使用
 TreeNode* createBTree(vector<int> arrays){
@@ -59,6 +57,17 @@ TreeNode* createBTree(vector<int> arrays){
     return root;
 }
 
+// 打印二叉树
+
+
+// 中序遍历
+void inorder(TreeNode* root, vector<int>& res){
+    if (root){
+        inorder(root->left, res);
+        res.push_back(root->val);
+        inorder(root->right, res);
+    }
+}
 
 // 二叉树的深度-分治、递归
 int maxDepth(TreeNode* root){
@@ -287,16 +296,169 @@ Node* connect(Node* root) {
     return root;
 }
 
+// 根据中序遍历与后续遍历构建二叉树
+TreeNode* buildTreeCore(std::map<int, int>& index_map, vector<int>& inorder, int inorder_front, int inorder_end,
+                        vector<int>& postorder, int poster_front, int poster_end){
+    if (inorder_front > inorder_end || poster_front > poster_end) return NULL;
+    int curr_root_val = postorder[poster_end];
+    TreeNode* root = new TreeNode(curr_root_val);
+    // 左子树
+    int lis = inorder_front;
+    int lie = index_map[curr_root_val] - 1;
+    int lps = poster_front;
+    int lpe = poster_front + index_map[curr_root_val] - inorder_front - 1;
+
+    // 右子树
+    int ris = index_map[curr_root_val] + 1;
+    int rie = inorder_end;
+    int rps = poster_front + index_map[curr_root_val] - inorder_front;
+    int rpe = poster_end - 1;
+
+    root->left = buildTreeCore(index_map, inorder, lis, lie, postorder, lps, lpe);
+    root->right = buildTreeCore(index_map, inorder, ris, rie, postorder, rps, rpe);
+    return root;
+}
+TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder){
+    std::map<int, int> index_map;
+    for (int i = 0; i < inorder.size(); i++){
+        index_map[inorder[i]] = i;
+    }
+    TreeNode* root = buildTreeCore(index_map, inorder, 0, inorder.size()-1,
+                                   postorder, 0, postorder.size()-1);
+    return root;
+}
+
+// 非递归树的中序遍历
+vector<int> inorderTraversal_not_recu(TreeNode* root){
+    vector<int> res;
+    std::stack<TreeNode*> stk;
+    while(root != NULL || stk.size()){
+        while(root != NULL){
+            stk.push(root);
+            root = root->left;
+        }
+        root = stk.top();
+        stk.pop();
+        res.push_back(root->val);
+        root = root->right;
+    }
+    return res;
+}
+
+// 二叉树的剪纸
+TreeNode* pruneTreeCore(TreeNode* root) {
+    if (root->left){
+        root->left = pruneTreeCore(root->left);
+    }
+    if (root->right){
+        root->right = pruneTreeCore(root->right);
+    }
+    if (root->left)
+        if (!root->left->left && !root->left->right && root->left->val == 0){
+            root->left = NULL;
+        }
+    if (root->right)
+        if (!root->right->left && !root->right->right && root->right->val == 0){
+            root->right = NULL;
+        }
+    return root;
+}
+TreeNode* pruneTree(TreeNode* root) {
+    TreeNode* res = pruneTreeCore(root);
+    if (!res->left && !res->right && res->val == 0)
+        return NULL;
+    return res;
+}
+
+// 包含所有最深节点的最小子树
+TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+    if (!root) return root;
+    int left_depth = maxDepth(root->left);
+    int right_depth = maxDepth(root->right);
+    if (left_depth == right_depth){
+        return root;
+    }else{
+        if (left_depth > right_depth) return subtreeWithAllDeepest(root->left);
+        else return subtreeWithAllDeepest(root->right);
+    }
+}
+
+// 合法的二叉搜索树
+// 合法的二叉搜索树其中序遍历是递增的
+bool isValidBST(TreeNode* root) {
+    if (!root) return true;
+    vector<int> inorder_res;
+    inorder(root, inorder_res);
+    for (int i = 1; i < inorder_res.size(); i++){
+        if (inorder_res[i] <= inorder_res[i - 1])
+            return false;
+    }
+    return true;
+}
+
+// 求和路径
+int pathSum_res = 0;
+void pathSumCore(TreeNode* root, int sum , int curr_sum, int& res){
+    if (root)
+        curr_sum += root->val;
+    else
+        return;
+    if (curr_sum == sum){
+        res++;
+    }
+    if (root->left){
+        pathSumCore(root->left, sum , curr_sum, res);
+    }
+    if (root->right){
+        pathSumCore(root->right, sum , curr_sum, res);
+    }
+}
+int pathSum_2(TreeNode* root, int sum) {
+    if (!root) return 0;
+    pathSumCore(root, sum, 0, pathSum_res);
+    if (root->left)
+        pathSum_2(root->left, sum);
+    if (root->right)
+        pathSum_2(root->right, sum);
+    return pathSum_res;
+}
+
+
+// 删点成林
+bool isInDeleteList(int val, vector<int>& to_delete){
+    for (int i = 0; i < to_delete.size(); i++){
+        if (val == to_delete[i])
+            return true;
+    }
+    return false;
+}
+
+void delNodesCore(TreeNode*& node, vector<int>& to_delete, vector<TreeNode*>& res) {
+    if (node == NULL) return;
+    delNodesCore(node->left, to_delete, res);
+    delNodesCore(node->right, to_delete, res);
+    if (isInDeleteList(node->val, to_delete)){
+        if (node->left) res.push_back(node->left);
+        if (node->right) res.push_back(node->right);
+        node = NULL;
+    }
+}
+
+vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+    vector<TreeNode*> res;
+    delNodesCore(root, to_delete, res);
+    if (root) res.push_back(root);
+    return res;
+}
+
 
 /*int main(){
-    std::vector<int> v = {3,9,20,-1,-1,15,7};
-    TreeNode* root = createBTree(v);
-    std::vector<std::vector<int>> res = returnLevelOrder(root);
-    for (int i = 0; i < res.size(); i++){
-        for (int j = 0; j < res[i].size(); j++){
-            cout << res[i][j] << ' ';
-        }
-        cout << endl;
+    vector<int> tree_val = {1, 2, 3, -1, -1, -1, 4};
+    vector<int> to_delete = {2, 1};
+    TreeNode* root = createBTree(tree_val);
+    vector<TreeNode*> res = delNodes(root, to_delete);
+    for (TreeNode* node : res){
+        cout << node->val << ' ';
     }
 }*/
 

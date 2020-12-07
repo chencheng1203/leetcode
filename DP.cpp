@@ -124,8 +124,8 @@ vector<vector<int>> matrixBlockSum(vector<vector<int>>& mat, int K) {
 }
 
 //零钱兑换
-const unsigned int INF_MAX = 99999;
 int less_time(vector<int>& coins, vector<int>& amount_store, int curr_acount){
+    const unsigned int INF_MAX = 99999;
     int res = INF_MAX;
     for (int i = 0; i < coins.size(); i++){
         if (curr_acount - coins[i] >= 0){
@@ -138,6 +138,7 @@ int less_time(vector<int>& coins, vector<int>& amount_store, int curr_acount){
 }
 
 int coinChange(vector<int>& coins, int amount) {
+    const unsigned int INF_MAX = 99999;
     vector<int> amount_store(amount+1, -1);
     amount_store[0] = 0;
     for (int i = 1; i <= amount; i++){
@@ -273,7 +274,7 @@ double new21Game(int N, int K, int W){
 
 // 计算各个位数不同的数字个数-动态规划
 // 1. 当n=0时，返回1，当n=1时，返回10
-// 2. 当n=2时，第一位有9中选择，第二位（个位）有（0-9）10种选择，但是不能选与前一位相同的数字，故只有9种选择
+// 2. 当n=2时，第一位有9种选择，第二位（个位）有（0-9）10种选择，但是不能选与前一位相同的数字，故只有9种选择
 // 3. 当n=3时，第一位有9种，第二位有9种，第三位有8种。。。
 int countNumbersWithUniqueDigits(int n){
     if (n == 0){return 1;}
@@ -321,7 +322,6 @@ int robCore(vector<int>& nums, int start, int end){
     if (size == 0) return 0;
     if (size == 1) return nums[start];
     if (size == 2) return std::max(nums[start], nums[start+1]);
-
     vector<int> dp(size, 0);
     dp[0] = nums[start];
     dp[1] = std::max(nums[start], nums[start+1]);
@@ -892,11 +892,50 @@ int minimumTotal_per(vector<vector<int>>& triangle){
     return res;
 }
 
-
-int main(){
-    vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
-    cout << minimumTotal_per(triangle);
+// 最长递增子序列
+vector<int> LIS(vector<int>& arr){
+    vector<int> res;
+    int size = arr.size();
+    vector<int> dp(size, 1);
+    vector<vector<int>> wise_lis(size);
+    int max_len_index = 0;
+    int max_len = 1;
+    for (int i = 0; i < size; i++){
+        if (i == 0){
+            wise_lis[i].push_back(arr[i]);
+        }
+        int curr_max_index = i;
+        for (int j = 0; j < i; j++){
+            if (arr[j] < arr[i]){
+                dp[i] = std::max(dp[j]+1, dp[i]);
+                if (dp[i] == dp[j]+1){
+                    curr_max_index = j;
+                }
+                if (dp[i] > max_len){
+                    max_len = dp[i];
+                    max_len_index = i;
+                }
+            }
+        }
+        if (curr_max_index == i){
+            wise_lis[i].push_back(arr[i]);
+        }else{
+            for (int num : wise_lis[curr_max_index])
+                wise_lis[i].push_back(num);
+            wise_lis[i].push_back(arr[i]);
+        }
+    }
+    return wise_lis[max_len_index];
 }
+
+// 不同的二叉搜索树
+/*int main(){
+    vector<int> nums = {2, 1, 5, 3, 6, 4, 8, 9, 7};
+    vector<int> res = LIS(nums);
+    for (int num : res){
+        cout << num << ' ';
+    }
+}*/
 
 
 

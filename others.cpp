@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory.h>
 #include <sstream>
+#include <math.h>
 
 using std::cout;
 using std::cin;
@@ -227,9 +228,276 @@ int getWinner(vector<int>& arr, int k) {
     return curr_win_num;
 }
 
+// 1438. 绝对差不超过限制的最长连续子数组
+int longestSubarray(vector<int>& nums, int limit) {
+
+}
+
+// 独一无二的出现次数
+bool uniqueOccurrences(vector<int>& arr) {
+    vector<int> curr_counts(2001, 0);
+    vector<bool> if_counts(999, 0);
+    for (int i = 0; i < arr.size(); i++){
+        curr_counts[1000+arr[i]]++;
+    }
+    for (int i = 0; i < curr_counts.size(); i++){
+        int curr_count = curr_counts[i];
+        if (curr_count == 0) continue;
+        if (!if_counts[curr_count])
+            if_counts[curr_count] = true;
+        else
+            return false;
+    }
+    return true;
+}
+
+// 岛屿的周长
+int islandPerimeter(vector<vector<int>>& grid) {
+    int cirle_len = 0;
+    int height = grid.size();
+    int width = grid[0].size();
+    // top
+    for (int i = 0; i < width; i++){
+        if (grid[0][i]){
+            cirle_len++;
+            if (i != 0 && !grid[0][i-1]){
+                cirle_len++;
+            }
+            if (i != width-1 && !grid[0][i+1]){
+                cirle_len++;
+            }
+        }
+    }
+    // right
+    for (int i = 0; i < height; i++){
+        if (grid[i][width-1]){
+            cirle_len++;
+            if (i != 0 && !grid[i-1][width-1]){
+                cirle_len++;
+            }
+            if (i != height-1 && !grid[i+1][width-1]){
+                cirle_len++;
+            }
+        }
+    }
+    // bottom
+    for (int i = 0; i < width; i++){
+        if (grid[height-1][i]){
+            cirle_len++;
+            if (i != 0 && !grid[height-1][i-1]){
+                cirle_len++;
+            }
+            if (i != width-1 && !grid[height-1][i+1]){
+                cirle_len++;
+            }
+        }
+    }
+    // left
+    for (int i = 0; i < height; i++){
+        if (grid[i][0]){
+            cirle_len++;
+            if (i != 0 && !grid[i-1][0]){
+                cirle_len++;
+            }
+            if (i != height-1 && !grid[i+1][0]){
+                cirle_len++;
+            }
+        }
+    }
+    cout << cirle_len;
+    for (int i = 1; i < height-1; i++){
+        for (int j = 1; j < width-1; j++){
+            if (grid[i][j]){
+                // top
+                if (!grid[i-1][j]){
+                    cirle_len++;
+                }
+                // right
+                if (!grid[i][j+1]){
+                    cirle_len++;
+                }
+                // bottom
+                if (!grid[i+1][j]){
+                    cirle_len++;
+                }
+                // left
+                if (!grid[i][j-1]){
+                    cirle_len++;
+                }
+            }
+        }
+    }
+    return cirle_len;
+}
+
+bool validMountainArray(vector<int>& A) {
+    int size = A.size();
+    if (size < 3) return false;
+    int increase_index = 1;
+    int down_index = increase_index;
+    for (; A[increase_index] > A[increase_index-1] && increase_index < size; increase_index++);
+    down_index = increase_index;
+    for (; down_index < size; down_index++){
+        if (A[down_index] >= A[down_index-1]){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+// 973. 最接近原点的 K 个点
+vector<vector<int>> kClosest(vector<vector<int>>& points, int K) {
+    std::sort(points.begin(), points.end(),
+              [](vector<int>& v1, vector<int>& v2){return (v1[0] * v1[0] + v1[1] * v1[1]) < (v2[0] * v2[0] + v2[1] * v2[1]);});
+    return {points.begin(), points.begin() + K};
+}
+
+// 优先队列-最小的K个数
+vector<int> getLeastNumbers(vector<int>& arr, int k){
+    vector<int> res;
+    std::priority_queue<int> q;
+    for (int i = 0; i < k; i++){
+        q.push(arr[i]);
+    }
+    for (int i = k; i < arr.size(); i++){
+        if (q.top() > arr[i]){
+            q.pop();
+            q.emplace(arr[i]);
+        }
+    }
+    for (int i = 0; i < k; i++){
+        res.push_back(q.top());
+        q.pop();
+    }
+    return res;
+}
+
+// 数组中重复的数字
+// 给定一个整数数组 a，其中1 ≤ a[i] ≤ n （n为数组长度）, 其中有些元素出现两次而其他元素出现一次
+// 思路：不使用额外的空间，如何标记该数字被访问过？
+// 正在被访问的数字对应的索引为，没次访问后，将其索引位置的数字标为-nums[i]
+// 若索引位置为“-”，则说明已经被访问过了
+vector<int> findDuplicates(vector<int>& nums) {
+    vector<int> res;
+    for (int i = 0; i < nums.size(); i++){
+        if (nums[abs(nums[i]) - 1] < 0){
+            res.push_back(abs(nums[i]));
+        }else{
+            nums[abs(nums[i]) - 1] = -nums[abs(nums[i]) - 1];
+        }
+    }
+    return res;
+}
+
+
+// 134. 加油站
+bool if_index_i_canCompleteCircuit(vector<int>& gas, vector<int>& cost, int i) {
+    int curr_index = 0;
+    int last_index = 0;
+    int curr_gas = gas[i];
+    for (int k = 1; k <= gas.size(); k++){
+        curr_index = (k + i) % gas.size();
+        last_index = (k + i - 1) % gas.size();
+        if (curr_gas < cost[last_index])
+            return false;
+        curr_gas = curr_gas - cost[last_index] + gas[curr_index];
+    }
+    return true;
+}
+
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+    for (int i = 0; i < gas.size(); i++){
+        if (gas[i] < cost[i]){
+            continue;
+        }else{
+            if (if_index_i_canCompleteCircuit(gas, cost, i)){
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
+// 283 移动零
+void moveZeroes(vector<int>& nums) {
+    vector<int>::iterator p = nums.begin();
+    int count = 0;
+    while(count != nums.size()){
+        if (*p == 0){
+            nums.erase(p);
+            nums.push_back(0);
+            count++;
+        }else{
+            p++;
+            count++;
+        }
+    }
+}
+
+// 丑数数列
+int getKthMagicNumber(int k) {
+    int p3 = 0, p5 = 0, p7 = 0;
+    vector<int> dp(k, 0);
+    dp[0] = 1;
+    for (int i = 1; i < k; i++){
+        int temp = std::min(std::min(dp[p3] * 3, dp[p5] * 5), dp[p7] * 7);
+        dp[i] = temp;
+        if (temp == dp[p3] * 3) p3++;
+        if (temp == dp[p5] * 5) p5++;
+        if (temp == dp[p7] * 7) p7++;
+    }
+    return dp[k - 1];
+}
+
+// 最小K个数
+// 找出数组中最小的k个数。以任意顺序返回这k个数均可
+// 思路：使用最大堆排序，优先队列
+vector<int> smallestK(vector<int>& arr, int k) {
+    vector<int> res;
+    int size = arr.size();
+    if (size < 1 || k == 0 || k > size) return res;
+    std::priority_queue<int> p_queue;
+    for (int i = 0; i < k; i++){
+        p_queue.push(arr[i]);
+    }
+    for (int i = k; i < size; i++){
+        if (p_queue.top() > arr[i]){
+            p_queue.pop();
+            p_queue.push(arr[i]);
+        }
+    }
+    while (!p_queue.empty()){
+        res.push_back(p_queue.top());
+        p_queue.pop();
+    }
+    return res;
+}
+
+// 杨辉三角
+vector<vector<int>> generate(int numRows) {
+    vector<vector<int>> res(numRows);
+    if (numRows < 1) return res;
+    res[0].push_back(1);
+    int left_val = 1;
+    int right_val = 1;
+    for (int i = 1; i < numRows; i++){
+        for (int j = 0; j < i; j++){
+            if (j == 0 || j == i - 1)
+                res[i][j] = 1;
+            else{
+                left_val = res[i - 1][j-1];
+                right_val = res[i - 1][j];
+                res[i][j] = left_val + right_val;
+            }
+        }
+    }
+    return res;
+}
 
 /*int main() {
-    vector<vector<int>> triangle = {{-1}, {-2, -3}};
-    cout << minimumTotal(triangle);
+//    vector<int> res;
+//    vector<int> arr = {1,3,5,7,2,4,6,8};
+    vector<vector<int>> res = generate(5);
 }*/
 

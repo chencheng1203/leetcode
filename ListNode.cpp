@@ -22,6 +22,19 @@ struct ListNode
     ListNode(int value):val(value), next(NULL){}
 };
 
+// 复杂链表的节点
+class CompletedNode {
+public:
+    int val;
+    CompletedNode* next;
+    CompletedNode* random;
+    CompletedNode(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+
 
 // 创建ListNode
 ListNode* createListNode(std::vector<int> nums){
@@ -274,12 +287,135 @@ ListNode* swapPairs(ListNode* head) {
     return res_p;
 }
 
+// 复杂链表的复制
+CompletedNode* copyRandomList(CompletedNode* head){
+    if (!head) return head;
+    CompletedNode* p = head;
+    while(p){
+        CompletedNode* p_next = p->next;
+        CompletedNode* tmp_node = new CompletedNode(p->val);
+        p->next = tmp_node;
+        tmp_node->next = p_next;
+        p = tmp_node->next;
+    }
+    p = head;
+    while(p){
+        CompletedNode* p_next = p->next;
+        if (p->random)
+            p_next->random = p->random->next;
+        else
+            p_next->random = NULL;
+        p = p_next->next;
+    }
+    p = head->next;
+    CompletedNode* pre_node = head;
+    CompletedNode* res = head->next;
+    while(p->next){
+        pre_node->next = pre_node->next->next;
+        p->next = p->next->next;
+        pre_node = pre_node->next;
+        p = p->next;
+    }
+    pre_node->next = NULL;
+    return res;
+}
 
+// 链表中两数相加
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    if (!l1  && !l2) return NULL;
+    std::stack<int> l1_stack;
+    std::stack<int> l2_stack;
+    ListNode* p = l1;
+    while(p){
+        l1_stack.push(p->val);
+        p = p->next;
+    }
+    p = l2;
+    while(p){
+        l2_stack.push(p->val);
+        p = p->next;
+    }
+    std::stack<int> res_stack;
+    int add_bit = 0;
+    int add_res = 0;
+    while(l1_stack.size() && l2_stack.size()){
+        int add_sum = l1_stack.top() + l2_stack.top() + add_bit;
+        add_res = add_sum % 10;
+        add_bit = add_sum / 10;
+        l1_stack.pop();
+        l2_stack.pop();
+        res_stack.push(add_res);
+    }
+    while(l1_stack.size()){
+        int add_sum = l1_stack.top() + add_bit;
+        add_res = add_sum % 10;
+        add_bit = add_sum / 10;
+        l1_stack.pop();
+        res_stack.push(add_res);
+    }
+    while(l2_stack.size()){
+        int add_sum = l2_stack.top() + add_bit;
+        add_res = add_sum % 10;
+        add_bit = add_sum / 10;
+        l2_stack.pop();
+        res_stack.push(add_res);
+    }
+    if (add_bit != 0) res_stack.push(add_bit);
+    ListNode* top_node = new ListNode(res_stack.top());
+    res_stack.pop();
+    p = top_node;
+    while(!res_stack.empty()){
+        p->next = new ListNode(res_stack.top());
+        res_stack.pop();
+        p = p->next;
+    }
+    return top_node;
+}
+
+// 判断链表中是否有环，若存在，则返回环的入口，否则返回null
+// 1. 判断是否有环-快慢指针
+// 2. 若有环，返回一个环中的节点
+// 3. 计算环的长度 len
+// 4. 头节点处设置两个指针，p1先走len步，然后两个指针一起走，当p1 == p2时，此处即为环的入口
+ListNode* if_has_circle(ListNode* head){
+    if (!head || !head->next) return NULL;
+    ListNode* p1 = head;
+    ListNode* p2 = p1->next;
+    while(p1 != p2 && p2 != NULL && p1 != NULL){
+        p1 = p1->next;
+        if (!p2->next) return NULL;
+        p2 = p2->next->next;
+    }
+    if (p1 == p2) return p1;
+    if (p1 == NULL || p2 == NULL) return NULL;
+    return NULL;
+}
+ListNode* detectCycle(ListNode *head) {
+    ListNode* cir_p = if_has_circle(head);
+    if (!cir_p) return NULL;
+    int circle_len = 0;
+    ListNode* p1 = cir_p;
+    p1 = p1->next;
+    circle_len++;
+    while(p1 != cir_p){
+        p1 = p1->next;
+        circle_len++;
+    }
+    p1 = head;
+    ListNode* p2 = head;
+    for (int i = 0; i < circle_len; i++){
+        p1 = p1->next;
+    }
+    while(p1 != p2){
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    return p1;
+}
 
 /*int main(){
-	std::vector<int> arrays = {1, 3, 5, 6, 8, 9, 14, 15};
-	ListNode* root = createListNode(arrays);
-	reversePrint(root);
+	// std::vector<int> arrays = {1, 3, 5, 6, 8};
+
 }*/
 
 
