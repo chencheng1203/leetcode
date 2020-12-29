@@ -8,6 +8,7 @@
 #include <memory.h>
 #include <sstream>
 #include <math.h>
+#include "utils.h"
 
 using std::cout;
 using std::cin;
@@ -495,9 +496,130 @@ vector<vector<int>> generate(int numRows) {
     return res;
 }
 
-/*int main() {
-//    vector<int> res;
-//    vector<int> arr = {1,3,5,7,2,4,6,8};
-    vector<vector<int>> res = generate(5);
-}*/
+int wiggleMaxLength(vector<int>& nums) {
+
+}
+
+// 只出现1次的数字，其余的出现3次
+int singleNumber(vector<int>& nums) {
+    int num_size =  nums.size();
+    vector<int> bit_counts(32, 0);
+    for (int i = 0; i < num_size; i++){
+        if (nums[i] < 0){
+            nums[i] = ~nums[i] + 1;
+        }
+        for (int j = 0; j < 32; j++){
+            int bit_flag = ((nums[i] >> j) & 1);
+            bit_counts[j] += bit_flag;
+        }
+    }
+    for (int i = 0; i < 32; i++){
+        bit_counts[i] %= 3;
+    }
+    int res = 0;
+    for (int i = 0; i < 31; i++){
+        if (bit_counts[i] == 1)
+            res += (std::pow(2, i));
+    }
+    if (bit_counts[31] == 1)
+        res = -res;
+    return res;
+}
+
+// 二分查找-返回左边界值
+int binary_search_left_bound(vector<int>& nums, int target){
+    int left = 0, right = nums.size() - 1;
+    while(left <= right){
+        int mid = left + (right - left) / 2;
+        if (nums[mid] < target){
+            left = mid + 1;
+        }
+        if(nums[mid] > target){
+            right = mid - 1;
+        }
+        if (nums[mid] == target){
+            right = mid - 1;
+        }
+    }
+    return left;
+}
+
+// 二分查找-返回右边界值
+int binary_search_right_bound(vector<int>& nums, int target){
+    int left = 0, right = nums.size() - 1;
+    while(left <= right){
+        int mid = left + (right - left) / 2;
+        if (nums[mid] < target){
+            left = mid + 1;
+        }
+        if(nums[mid] > target){
+            right = mid - 1;
+        }
+        if (nums[mid] == target){
+            left = mid + 1;
+        }
+    }
+    return right;
+}
+
+// 275. H指数
+int hIndex(vector<int>& citations) {
+    int left = citations.size();
+    int i = 0;
+    while(citations[i] <= left){
+        i++;
+        left--;
+    }
+    return citations[--i];
+}
+
+// 有序数组中唯一的元素
+int singleNonDuplicate(vector<int>& nums) {
+    int p1 = 0, p2 = nums.size() - 1;
+    int res = 0;
+    bool flag = true;
+    while(p1 < p2){
+        if (flag){
+            res += (nums[p1] + nums[p2]);
+            p1++;
+            p2--;
+        }
+        if (!flag){
+            res -= (nums[p1] + nums[p2]);
+            p1++;
+            p2--;
+        }
+        flag = !flag;
+    }
+    if (flag) res += nums[p1];
+    else res -= nums[p1];
+    return res;
+}
+
+// 排序矩阵中查找元素
+bool searchMatrix(vector<vector<int>>& matrix, int target) {
+    int rows = matrix.size();
+    if (rows == 0) return false;
+    int cols = matrix[0].size();
+    int row = 0;
+    int col = cols - 1;
+    while(row < rows && col >= 0){
+        if (matrix[row][col] == target)
+            return true;
+        if (matrix[row][col] > target){
+            col--;
+            continue;
+        }
+        if (matrix[row][col] < target)
+            row++;
+    }
+    return false;
+}
+
+
+//int main() {
+//    vector<vector<int>> v = {{-5}};
+//    bool res = searchMatrix(v, -19);
+//    cout << res;
+//}
 

@@ -6,7 +6,29 @@
 
 #IncludeRegexTransform: 
 
-D:/Code/leetcode/leetcode_classify/DP.cpp
+D:/Code/leetcode/leetcode_classify/DataStructure.cpp
+iostream
+-
+string
+-
+vector
+-
+queue
+-
+map
+-
+stack
+-
+algorithm
+-
+math.h
+-
+memory.h
+-
+utils.h
+D:/Code/leetcode/leetcode_classify/utils.h
+
+D:/Code/leetcode/leetcode_classify/utils.h
 iostream
 -
 string

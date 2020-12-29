@@ -5,13 +5,13 @@
 #include <map>
 #include <stack>
 #include <algorithm>
+#include "utils.h"
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::string;
 using std::vector;
-
 
 struct TreeNode
 {
@@ -451,15 +451,79 @@ vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
     return res;
 }
 
+// 二叉树中的最大路径和
+// 维护当前节点的最大贡献值，指的是以该节点为终点，其最大和为多大
+// 在递归的过程中维护ans
+int maxPathSum_ans = -999;
+int maxPathSum_dfs(TreeNode* root) {
+    if (!root) return 0;
+    int left = std::max(0, maxPathSum_dfs(root->left));
+    int right = std::max(0, maxPathSum_dfs(root->right));
+    maxPathSum_ans = std::max(maxPathSum_ans, left + right + root->val);
+    // return maxPathSum_ans;
+    return std::max(left, right) + root->val;
+}
+int maxPathSum(TreeNode* root) {
+    maxPathSum_dfs(root);
+    return maxPathSum_ans;
+}
+
+// 根据前序遍历和中序遍历还原二叉树
+TreeNode* buildTree_second_recur(std::map<int, int>& inorder_num_idx, vector<int>& pre_order, int ps, int pe, vector<int>& in_order, int is, int ie){
+    if (ps > pe || is > ie) return NULL;
+    int node_val = pre_order[ps];
+    TreeNode* root = new TreeNode(node_val);
+
+    int num_left = inorder_num_idx[node_val] - is;
+    // 左子树
+    int lps = ps + 1;
+    int lpe = ps + num_left;
+    int lis = is;
+    int lie = inorder_num_idx[node_val] - 1;
+
+    // 右子树
+    int rps = ps + num_left + 1;
+    int rpe = pe;
+    int ris = inorder_num_idx[node_val] + 1;
+    int rie = ie;
+
+    root->left = buildTree_second_recur(inorder_num_idx, pre_order, lps, lpe, in_order, lis, lie);
+    root->right = buildTree_second_recur(inorder_num_idx, pre_order, rps, rpe, in_order, ris, rie);
+    return root;
+}
+
+
+TreeNode* buildTree_second(vector<int>& pre_order, vector<int>& in_order){
+    std::map<int, int> inorder_num_idx;
+    for (int i = 0; i < in_order.size(); i++){
+        inorder_num_idx[in_order[i]] = i;
+    }
+    TreeNode* root = buildTree_second_recur(inorder_num_idx, pre_order, 0, pre_order.size()-1, in_order, 0, in_order.size()-1);
+    return root;
+}
+
+// 二叉树的最小深度
+void minDepth_core(TreeNode* root, int step, int& res){
+    if (!root->left && !root->right){
+        res = std::min(res, step);
+    }
+    if (root->left){
+        minDepth_core(root->left, step+1, res);
+    }
+    if (root->right){
+        minDepth_core(root->right, step+1, res);
+    }
+}
+int minDepth(TreeNode* root) {
+    int res = 9999;
+    minDepth_core(root, 1, res);
+    return res;
+}
 
 /*int main(){
-    vector<int> tree_val = {1, 2, 3, -1, -1, -1, 4};
-    vector<int> to_delete = {2, 1};
-    TreeNode* root = createBTree(tree_val);
-    vector<TreeNode*> res = delNodes(root, to_delete);
-    for (TreeNode* node : res){
-        cout << node->val << ' ';
-    }
+    vector<int> node = {2, 1, 3, 4, 9, 5, 7};
+    TreeNode* root = createBTree(node);
+    cout << minDepth(root);
 }*/
 
 

@@ -176,6 +176,33 @@ DP.cpp.s:
 	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/DP.cpp.s
 .PHONY : DP.cpp.s
 
+DataStructure.obj: DataStructure.cpp.obj
+
+.PHONY : DataStructure.obj
+
+# target to build an object file
+DataStructure.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj
+.PHONY : DataStructure.cpp.obj
+
+DataStructure.i: DataStructure.cpp.i
+
+.PHONY : DataStructure.i
+
+# target to preprocess a source file
+DataStructure.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/DataStructure.cpp.i
+.PHONY : DataStructure.cpp.i
+
+DataStructure.s: DataStructure.cpp.s
+
+.PHONY : DataStructure.s
+
+# target to generate assembly for a file
+DataStructure.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/DataStructure.cpp.s
+.PHONY : DataStructure.cpp.s
+
 ListNode.obj: ListNode.cpp.obj
 
 .PHONY : ListNode.obj
@@ -202,6 +229,87 @@ ListNode.s: ListNode.cpp.s
 ListNode.cpp.s:
 	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/ListNode.cpp.s
 .PHONY : ListNode.cpp.s
+
+backtrack.obj: backtrack.cpp.obj
+
+.PHONY : backtrack.obj
+
+# target to build an object file
+backtrack.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj
+.PHONY : backtrack.cpp.obj
+
+backtrack.i: backtrack.cpp.i
+
+.PHONY : backtrack.i
+
+# target to preprocess a source file
+backtrack.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/backtrack.cpp.i
+.PHONY : backtrack.cpp.i
+
+backtrack.s: backtrack.cpp.s
+
+.PHONY : backtrack.s
+
+# target to generate assembly for a file
+backtrack.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/backtrack.cpp.s
+.PHONY : backtrack.cpp.s
+
+dfs.obj: dfs.cpp.obj
+
+.PHONY : dfs.obj
+
+# target to build an object file
+dfs.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/dfs.cpp.obj
+.PHONY : dfs.cpp.obj
+
+dfs.i: dfs.cpp.i
+
+.PHONY : dfs.i
+
+# target to preprocess a source file
+dfs.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/dfs.cpp.i
+.PHONY : dfs.cpp.i
+
+dfs.s: dfs.cpp.s
+
+.PHONY : dfs.s
+
+# target to generate assembly for a file
+dfs.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/dfs.cpp.s
+.PHONY : dfs.cpp.s
+
+greedy.obj: greedy.cpp.obj
+
+.PHONY : greedy.obj
+
+# target to build an object file
+greedy.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/greedy.cpp.obj
+.PHONY : greedy.cpp.obj
+
+greedy.i: greedy.cpp.i
+
+.PHONY : greedy.i
+
+# target to preprocess a source file
+greedy.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/greedy.cpp.i
+.PHONY : greedy.cpp.i
+
+greedy.s: greedy.cpp.s
+
+.PHONY : greedy.s
+
+# target to generate assembly for a file
+greedy.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/greedy.cpp.s
+.PHONY : greedy.cpp.s
 
 others.obj: others.cpp.obj
 
@@ -230,6 +338,87 @@ others.cpp.s:
 	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/others.cpp.s
 .PHONY : others.cpp.s
 
+sort.obj: sort.cpp.obj
+
+.PHONY : sort.obj
+
+# target to build an object file
+sort.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/sort.cpp.obj
+.PHONY : sort.cpp.obj
+
+sort.i: sort.cpp.i
+
+.PHONY : sort.i
+
+# target to preprocess a source file
+sort.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/sort.cpp.i
+.PHONY : sort.cpp.i
+
+sort.s: sort.cpp.s
+
+.PHONY : sort.s
+
+# target to generate assembly for a file
+sort.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/sort.cpp.s
+.PHONY : sort.cpp.s
+
+string.obj: string.cpp.obj
+
+.PHONY : string.obj
+
+# target to build an object file
+string.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/string.cpp.obj
+.PHONY : string.cpp.obj
+
+string.i: string.cpp.i
+
+.PHONY : string.i
+
+# target to preprocess a source file
+string.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/string.cpp.i
+.PHONY : string.cpp.i
+
+string.s: string.cpp.s
+
+.PHONY : string.s
+
+# target to generate assembly for a file
+string.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/string.cpp.s
+.PHONY : string.cpp.s
+
+utils.obj: utils.cpp.obj
+
+.PHONY : utils.obj
+
+# target to build an object file
+utils.cpp.obj:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/utils.cpp.obj
+.PHONY : utils.cpp.obj
+
+utils.i: utils.cpp.i
+
+.PHONY : utils.i
+
+# target to preprocess a source file
+utils.cpp.i:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/utils.cpp.i
+.PHONY : utils.cpp.i
+
+utils.s: utils.cpp.s
+
+.PHONY : utils.s
+
+# target to generate assembly for a file
+utils.cpp.s:
+	$(MAKE) -f CMakeFiles\leetcode_classify.dir\build.make CMakeFiles/leetcode_classify.dir/utils.cpp.s
+.PHONY : utils.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -245,12 +434,33 @@ help:
 	@echo ... DP.obj
 	@echo ... DP.i
 	@echo ... DP.s
+	@echo ... DataStructure.obj
+	@echo ... DataStructure.i
+	@echo ... DataStructure.s
 	@echo ... ListNode.obj
 	@echo ... ListNode.i
 	@echo ... ListNode.s
+	@echo ... backtrack.obj
+	@echo ... backtrack.i
+	@echo ... backtrack.s
+	@echo ... dfs.obj
+	@echo ... dfs.i
+	@echo ... dfs.s
+	@echo ... greedy.obj
+	@echo ... greedy.i
+	@echo ... greedy.s
 	@echo ... others.obj
 	@echo ... others.i
 	@echo ... others.s
+	@echo ... sort.obj
+	@echo ... sort.i
+	@echo ... sort.s
+	@echo ... string.obj
+	@echo ... string.i
+	@echo ... string.s
+	@echo ... utils.obj
+	@echo ... utils.i
+	@echo ... utils.s
 .PHONY : help
 
 

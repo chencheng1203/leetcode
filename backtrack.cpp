@@ -5,6 +5,7 @@
 #include <map>
 #include <stack>
 #include <algorithm>
+#include "utils.h"
 
 using std::cout;
 using std::cin;
@@ -13,15 +14,8 @@ using std::endl;
 using std::string;
 using std::vector;
 
-// 2D-vector打印
-void print_2D_vector(const vector<vector<int>>& matrix){
-    for (int i = 0; i < matrix.size(); i++){
-        for (int j = 0; j < matrix[i].size(); j++){
-            cout << matrix[i][j] << ' ';
-        }
-        cout << endl;
-    }
-}
+// 函数声明
+// void print_2D_vector(const vector<vector<int>>& matrix);
 
 // 全排列
 // 深度优先遍历，首先画出树形图
@@ -108,9 +102,91 @@ int minimumTotal(vector<vector<int>>& triangle) {
     return res;
 }
 
+// 将数组拆分成斐波那契数列
+// 给定一个数字字符串 S，比如 S = "123456579"，我们可以将它分成斐波那契式的序列 [123, 456, 579]
+
+// N皇后
+// board[row][col]中放置皇后是否合法
+bool NQueueIsValid(vector<string>& board, int row, int col){
+    int cols = board.size();
+    // 判断在该列上放置皇后是否合法
+    for (int i = 0; i < row; i++){
+        if (board[i][col] == 'Q')
+            return false;
+    }
+    // 判断右上角放置皇后是否合法
+    for (int i = row - 1, j = col + 1; i >= 0 &&  j < cols; i--, j++){
+        if (board[i][j] == 'Q')
+            return false;
+    }
+    // 判断左上角放置皇后是否合法
+    for (int i = row - 1, j = col - 1; i >= 0 && j >=0; i--, j--){
+        if (board[i][j] == 'Q')
+            return false;
+    }
+    return true;
+}
+void NQueue_dfs(vector<string> board, int row, vector<vector<string>>& res){
+    if (row == board.size()){
+        res.push_back(board);
+        return;
+    }
+    // 在该行的每一列上尝试放置皇后
+    int n = board[row].size();
+    for (int i = 0; i < n; i++){
+        // 若不合法，则继续判断下一列
+        if (!NQueueIsValid(board, row, i))
+            continue;
+        // 若是合法的，则填充该列[进行选择]，并且进入下一行
+        board[row][i] = 'Q';
+        NQueue_dfs(board, row+1, res);
+        // 撤销选择
+        board[row][i] = '.';
+    }
+}
+
+vector<vector<string>> solveNQueens(int n){
+    vector<string> board(n, string(n, '.'));
+    vector<vector<string>> res;
+    NQueue_dfs(board, 0, res);
+    return res;
+}
+
+
+// 0-1矩阵
+void updateMatrix_dfs(vector<vector<int>>& matrix, vector<vector<bool>>& visited, int& steps, int curr_step, int rows, int cols, int i, int j){
+    if (i >= 0 && i < rows && j >= 0 && j < cols && !visited[i][j]){
+        if (matrix[i][j] == 0){
+            steps = std::min(steps, curr_step);
+            return;
+        }
+        curr_step++;
+        visited[i][j] = true;
+        updateMatrix_dfs(matrix, visited, steps, curr_step, rows, cols, i+1, j);
+        updateMatrix_dfs(matrix, visited, steps, curr_step, rows, cols, i-1, j);
+        updateMatrix_dfs(matrix, visited, steps, curr_step, rows, cols, i, j-1);
+        updateMatrix_dfs(matrix, visited, steps, curr_step, rows, cols, i, j+1);
+        visited[i][j] = false;
+    }
+}
+vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+    int rows = matrix.size(), cols = matrix[0].size();
+    vector<vector<int>> res(rows, vector<int>(cols, 0));
+    vector<vector<bool>> visited(rows, vector<bool>(cols, false));
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            int steps = 9999;
+            updateMatrix_dfs(matrix, visited, steps, 0, rows, cols, i, j);
+            res[i][j] = steps;
+        }
+    }
+    return res;
+}
 
 /*int main(){
-    vector<vector<char>> board = {{'A','B','C','E'},{'S','F','C','S'},{'A','D','E','E'}};
-    string S = "ABCCED";
-    cout << exist(board, S);
+    vector<vector<int>> matrix = {{0,0,0},
+                                  {0,1,0},
+                                  {1,1,1}};
+    vector<vector<int>> res = updateMatrix(matrix);
+    print_2D_vector(res);
 }*/

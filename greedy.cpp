@@ -60,9 +60,41 @@ int matrixScore(vector<vector<int>>& A){
     return sum;
 }
 
+// 分发糖果
+int candy(vector<int>& ratings) {
+    int num_size = ratings.size();
+    vector<int> dp(num_size, 1);
+    int res = 0;
+    for (int i = 1; i < num_size; i++){
+        if (ratings[i] < ratings[i - 1] && dp[i - 1] == 1){
+            // 将当前位置 置1
+            dp[i] = 1;
+            dp[i - 1] += 1;
+            int j = i - 2;
+            for (; j >= 0 && dp[j] != 1; j--){
+                dp[j] += 1;
+            }
+        }
+        if (ratings[i] <= ratings[i - 1] && dp[i - 1] > 1){
+            dp[i] = 1;
+        }
+        if (ratings[i] > ratings[i - 1]){
+            dp[i] = dp[i - 1] + 1;
+        }
+
+    }
+    for (int num : dp){
+        cout << num << ' ';
+        res += num;
+    }
+    cout << endl;
+    return res;
+}
+
+
 /*int main(){
-    vector<vector<int>> v = {{0,0,1,1},{1,0,1,0},{1,1,0,0}};
-    int sum = matrixScore(v);
+    vector<int> v = {29,51,87,87,72,12};
+    int sum = candy(v);
     cout << sum;
 }*/
 

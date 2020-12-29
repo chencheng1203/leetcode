@@ -108,12 +108,110 @@ CMakeFiles/leetcode_classify.dir/others.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/others.cpp.s"
 	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\others.cpp -o CMakeFiles\leetcode_classify.dir\others.cpp.s
 
+CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj: ../backtrack.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\backtrack.cpp.obj -c D:\Code\leetcode\leetcode_classify\backtrack.cpp
+
+CMakeFiles/leetcode_classify.dir/backtrack.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/backtrack.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\backtrack.cpp > CMakeFiles\leetcode_classify.dir\backtrack.cpp.i
+
+CMakeFiles/leetcode_classify.dir/backtrack.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/backtrack.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\backtrack.cpp -o CMakeFiles\leetcode_classify.dir\backtrack.cpp.s
+
+CMakeFiles/leetcode_classify.dir/greedy.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/greedy.cpp.obj: ../greedy.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/leetcode_classify.dir/greedy.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\greedy.cpp.obj -c D:\Code\leetcode\leetcode_classify\greedy.cpp
+
+CMakeFiles/leetcode_classify.dir/greedy.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/greedy.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\greedy.cpp > CMakeFiles\leetcode_classify.dir\greedy.cpp.i
+
+CMakeFiles/leetcode_classify.dir/greedy.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/greedy.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\greedy.cpp -o CMakeFiles\leetcode_classify.dir\greedy.cpp.s
+
+CMakeFiles/leetcode_classify.dir/sort.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/sort.cpp.obj: ../sort.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/leetcode_classify.dir/sort.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\sort.cpp.obj -c D:\Code\leetcode\leetcode_classify\sort.cpp
+
+CMakeFiles/leetcode_classify.dir/sort.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/sort.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\sort.cpp > CMakeFiles\leetcode_classify.dir\sort.cpp.i
+
+CMakeFiles/leetcode_classify.dir/sort.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/sort.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\sort.cpp -o CMakeFiles\leetcode_classify.dir\sort.cpp.s
+
+CMakeFiles/leetcode_classify.dir/utils.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/utils.cpp.obj: ../utils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/leetcode_classify.dir/utils.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\utils.cpp.obj -c D:\Code\leetcode\leetcode_classify\utils.cpp
+
+CMakeFiles/leetcode_classify.dir/utils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/utils.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\utils.cpp > CMakeFiles\leetcode_classify.dir\utils.cpp.i
+
+CMakeFiles/leetcode_classify.dir/utils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/utils.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\utils.cpp -o CMakeFiles\leetcode_classify.dir\utils.cpp.s
+
+CMakeFiles/leetcode_classify.dir/dfs.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/dfs.cpp.obj: ../dfs.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/leetcode_classify.dir/dfs.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\dfs.cpp.obj -c D:\Code\leetcode\leetcode_classify\dfs.cpp
+
+CMakeFiles/leetcode_classify.dir/dfs.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/dfs.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\dfs.cpp > CMakeFiles\leetcode_classify.dir\dfs.cpp.i
+
+CMakeFiles/leetcode_classify.dir/dfs.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/dfs.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\dfs.cpp -o CMakeFiles\leetcode_classify.dir\dfs.cpp.s
+
+CMakeFiles/leetcode_classify.dir/string.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/string.cpp.obj: ../string.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/leetcode_classify.dir/string.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\string.cpp.obj -c D:\Code\leetcode\leetcode_classify\string.cpp
+
+CMakeFiles/leetcode_classify.dir/string.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/string.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\string.cpp > CMakeFiles\leetcode_classify.dir\string.cpp.i
+
+CMakeFiles/leetcode_classify.dir/string.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/string.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\string.cpp -o CMakeFiles\leetcode_classify.dir\string.cpp.s
+
+CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj: CMakeFiles/leetcode_classify.dir/flags.make
+CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj: ../DataStructure.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj"
+	D:\Software\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\leetcode_classify.dir\DataStructure.cpp.obj -c D:\Code\leetcode\leetcode_classify\DataStructure.cpp
+
+CMakeFiles/leetcode_classify.dir/DataStructure.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/leetcode_classify.dir/DataStructure.cpp.i"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\Code\leetcode\leetcode_classify\DataStructure.cpp > CMakeFiles\leetcode_classify.dir\DataStructure.cpp.i
+
+CMakeFiles/leetcode_classify.dir/DataStructure.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/leetcode_classify.dir/DataStructure.cpp.s"
+	D:\Software\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\Code\leetcode\leetcode_classify\DataStructure.cpp -o CMakeFiles\leetcode_classify.dir\DataStructure.cpp.s
+
 # Object files for target leetcode_classify
 leetcode_classify_OBJECTS = \
 "CMakeFiles/leetcode_classify.dir/BinaryTree.cpp.obj" \
 "CMakeFiles/leetcode_classify.dir/ListNode.cpp.obj" \
 "CMakeFiles/leetcode_classify.dir/DP.cpp.obj" \
-"CMakeFiles/leetcode_classify.dir/others.cpp.obj"
+"CMakeFiles/leetcode_classify.dir/others.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/greedy.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/sort.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/utils.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/dfs.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/string.cpp.obj" \
+"CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj"
 
 # External object files for target leetcode_classify
 leetcode_classify_EXTERNAL_OBJECTS =
@@ -122,11 +220,18 @@ leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/BinaryTree.cpp.obj
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/ListNode.cpp.obj
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/DP.cpp.obj
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/others.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/backtrack.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/greedy.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/sort.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/utils.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/dfs.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/string.cpp.obj
+leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/DataStructure.cpp.obj
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/build.make
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/linklibs.rsp
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/objects1.rsp
 leetcode_classify.exe: CMakeFiles/leetcode_classify.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable leetcode_classify.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=D:\Code\leetcode\leetcode_classify\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable leetcode_classify.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\leetcode_classify.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

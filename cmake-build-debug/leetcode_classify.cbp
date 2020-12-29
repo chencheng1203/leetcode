@@ -86,10 +86,34 @@
 		<Unit filename="D:/Code/leetcode/leetcode_classify/DP.cpp">
 			<Option target="leetcode_classify"/>
 		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/DataStructure.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
 		<Unit filename="D:/Code/leetcode/leetcode_classify/ListNode.cpp">
 			<Option target="leetcode_classify"/>
 		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/backtrack.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/dfs.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/greedy.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
 		<Unit filename="D:/Code/leetcode/leetcode_classify/others.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/sort.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/string.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/utils.cpp">
+			<Option target="leetcode_classify"/>
+		</Unit>
+		<Unit filename="D:/Code/leetcode/leetcode_classify/utils.h">
 			<Option target="leetcode_classify"/>
 		</Unit>
 		<Unit filename="D:/Code/leetcode/leetcode_classify/CMakeLists.txt">

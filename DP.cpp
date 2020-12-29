@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <math.h>
 #include <memory.h>
+#include "utils.h"
 
 using std::cout;
 using std::cin;
@@ -928,18 +929,53 @@ vector<int> LIS(vector<int>& arr){
     return wise_lis[max_len_index];
 }
 
-// 不同的二叉搜索树
-/*int main(){
-    vector<int> nums = {2, 1, 5, 3, 6, 4, 8, 9, 7};
-    vector<int> res = LIS(nums);
-    for (int num : res){
-        cout << num << ' ';
+// 698. 划分为K个相等的子集
+bool canPartitionKSubsets(vector<int>& nums, int k) {
+    return 1;
+}
+
+// 0-1 矩阵
+vector<vector<int>> updateMatrix_dp(vector<vector<int>>& matrix){
+    int rows = matrix.size(), cols = matrix[0].size();
+    vector<vector<int>> dp1(rows, vector<int>(cols, 9999));
+    vector<vector<int>> dp2(rows, vector<int>(cols, 9999));
+    vector<vector<int>> res(rows, vector<int>(cols, 0));
+    // 从前向后遍历
+    for (int i = 0; i < rows; i++){
+        for (int j = 0; j < cols; j++){
+            if (matrix[i][j] == 0){
+                dp1[i][j] = 0;
+            }else{
+                int left = std::max(0, j - 1);
+                int top = std::max(0, i - 1);
+                dp1[i][j] = std::min(dp1[top][j]+1, dp1[i][left]+1);
+            }
+        }
     }
-}*/
+    // 从后向前遍历
+    for (int i = rows - 1; i >= 0; i--){
+        for (int j = cols - 1; j >= 0; j--){
+            if (matrix[i][j] == 0){
+                dp2[i][j] = 0;
+            }else{
+                int right = std::min(cols-1, j + 1);
+                int botton = std::min(rows-1, i + 1);
+                dp2[i][j] = std::min(dp2[botton][j]+1, dp2[i][right]+1);
+            }
+            res[i][j] = std::min(dp1[i][j], dp2[i][j]);
+        }
+    }
+    return res;
+}
 
 
 
+// 不同的二叉搜索树
 
-
-
-
+//int main(){
+//    vector<vector<int>> matrix = {{0,0,0},
+//                                  {0,1,0},
+//                                  {1,1,1}};
+//    vector<vector<int>> res = updateMatrix_dp(matrix);
+//    print_2D_vector(res);
+//}

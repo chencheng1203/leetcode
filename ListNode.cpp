@@ -37,7 +37,7 @@ public:
 
 
 // 创建ListNode
-ListNode* createListNode(std::vector<int> nums){
+ListNode* createListNode(std::vector<int>& nums){
     ListNode* root;
     ListNode* p;
     if (!nums.size()) return new ListNode(-1);
@@ -52,6 +52,16 @@ ListNode* createListNode(std::vector<int> nums){
     }
     return root;
 }
+
+// 打印链表
+void print_List(ListNode* root){
+    ListNode* p = root;
+    while(p){
+        cout << p->val << ' ';
+        p = p->next;
+    }
+}
+
 
 // 反转链表
 ListNode* reverseList(ListNode* head){
@@ -413,9 +423,41 @@ ListNode* detectCycle(ListNode *head) {
     return p1;
 }
 
-/*int main(){
-	// std::vector<int> arrays = {1, 3, 5, 6, 8};
+// 链表的排序
+ListNode* sortList(ListNode* head) {
+    if (!head) return head;
+    ListNode* p1 = head->next;
+    ListNode* res_head = head;
+    res_head->next = NULL;
+    while(p1){
+        ListNode* res_p = res_head;
+        ListNode* pre_p  = NULL;
+        while(res_p != NULL && res_p->val <= p1->val){
+            pre_p = res_p;
+            res_p = res_p->next;
+        }
+        if (pre_p){
+            ListNode* tmp_node = p1;
+            p1 = p1->next;
+            pre_p->next = tmp_node;
+            tmp_node->next = res_p;
+        }else{
+            ListNode* tmp_node = p1;
+            p1 = p1->next;
+            tmp_node->next = res_head;
+            res_head = tmp_node;
+        }
+    }
+    return res_head;
+}
 
+/*int main(){
+	std::vector<int> arrays = {5, 1, 6, 3, 2};
+    ListNode* head = createListNode(arrays);
+    ListNode* res = sortList(head);
+
+    ListNode* p = res;
+    print_List(p);
 }*/
 
 
